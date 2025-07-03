@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 #CORS(app, supports_credentials=True)
-CORS(app, supports_credentials=True, origins=["https://<TU-DOMINIO>.netlify.app"])
+CORS(app, resources={r"/api/*": {"origins": "https://frontend-semana13.netlify.app"}}, supports_credentials=True)
 
 # CORS(app, origins='FRONTEND_URL', supports_credentials=True)
 
