@@ -15,18 +15,39 @@ CORS(app, resources={r"/api/*": {"origins": "https://frontend-semana13.netlify.a
 
 app.secret_key = 'SECRET_KEY'
 
-interpreter = tf.lite.Interpreter(model_path="modeloDEC.tflite")
-interpreter.allocate_tensors()
+interpreter = None
+input_details = None
+output_details = None
 
-input_details = interpreter.get_input_details()
-output_details = interpreter.get_output_details()
+def load_model():
+    global interpreter, input_details, output_details
+    if interpreter is None:
+        try:
+            model_path = os.path.join(os.path.dirname(__file__), "modeloDEC.tflite")
+            if not os.path.exists(model_path):
+                print("❌ modeloDEC.tflite no encontrado.")
+                return False
+
+            interpreter = tf.lite.Interpreter(model_path=model_path)
+            interpreter.allocate_tensors()
+            input_details = interpreter.get_input_details()
+            output_details = interpreter.get_output_details()
+            print("✅ Modelo cargado correctamente.")
+            return True
+        except Exception as e:
+            print(f"❌ Error cargando modelo: {e}")
+            return False
+    return True
 
 def predict_with_tflite(input_data):
-    input_data = input_data.astype(np.float32)    
-    interpreter.set_tensor(input_details[0]['index'], input_data)    
-    interpreter.invoke()    
+    if not load_model():
+        raise RuntimeError("Modelo no disponible")
+    input_data = input_data.astype(np.float32)
+    interpreter.set_tensor(input_details[0]['index'], input_data)
+    interpreter.invoke()
     output_data = interpreter.get_tensor(output_details[0]['index'])
     return output_data[0]
+
 
 def get_db_connection():
     return psycopg2.connect('postgresql://db_unfv_ver5_user:rTxeXCWafkztYkNnhrRPZCnBIqATGP1c@dpg-d13fbvk9c44c7399ca1g-a.oregon-postgres.render.com/db_unfv_ver5')
