@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, session, flash # type: ignore
 from flask_cors import CORS # type: ignore
 import numpy as np # type: ignore
-import tensorflow as tf # type: ignore
+import tflite_runtime.interpreter as tflite # type: ignore
 import psycopg2 # type: ignore
 from datetime import datetime
 import os
@@ -28,7 +28,7 @@ def load_model():
                 print("❌ modeloDEC.tflite no encontrado.")
                 return False
 
-            interpreter = tf.lite.Interpreter(model_path=model_path)
+            interpreter = tflite.Interpreter(model_path=model_path)
             interpreter.allocate_tensors()
             input_details = interpreter.get_input_details()
             output_details = interpreter.get_output_details()
