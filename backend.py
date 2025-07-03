@@ -30,7 +30,7 @@ def predict_with_tflite(input_data):
 
 def get_db_connection():
     return psycopg2.connect('postgresql://db_unfv_ver5_user:rTxeXCWafkztYkNnhrRPZCnBIqATGP1c@dpg-d13fbvk9c44c7399ca1g-a.oregon-postgres.render.com/db_unfv_ver5')
-    #return psycopg2.connect(os.getenv('DATABASE_URL'))
+    return psycopg2.connect(os.getenv('DATABASE_URL'))
     #internal_db_url = postgresql://db_unfv_ver5_user:rTxeXCWafkztYkNnhrRPZCnBIqATGP1c@dpg-d13fbvk9c44c7399ca1g-a/db_unfv_ver5
     #external_db_url = postgresql://db_unfv_ver5_user:rTxeXCWafkztYkNnhrRPZCnBIqATGP1c@dpg-d13fbvk9c44c7399ca1g-a.oregon-postgres.render.com/db_unfv_ver5
 
