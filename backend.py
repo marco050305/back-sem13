@@ -358,17 +358,3 @@ def configuracion():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
-
-
-
-
-
-
-Flask==3.1.1
-flask-cors==6.0.0
-greenlet==3.2.2
-gunicorn==23.0.0
-itsdangerous==2.2.0
-Jinja2==3.1.6
-psycopg2==2.9.10
-tensorflow==2.14.0
