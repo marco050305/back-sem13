@@ -9,6 +9,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 #CORS(app, supports_credentials=True)
+app.config['SESSION_COOKIE_SAMESITE'] = "None"
+app.config['SESSION_COOKIE_SECURE'] = True
 CORS(app, resources={r"/api/*": {"origins": "https://frontend-semana13.netlify.app"}}, supports_credentials=True)
 
 # CORS(app, origins='FRONTEND_URL', supports_credentials=True)
